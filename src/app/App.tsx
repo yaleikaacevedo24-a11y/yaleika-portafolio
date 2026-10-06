@@ -32,7 +32,7 @@ const cursorContext = {
 function CursorPill({ pos, visible }: { pos: { x: number; y: number }; visible: boolean }) {
   return (
     <div
-      className="fixed z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2"
+      className="fixed z-[9999] pointer-events-none -translate-x-1/2 -translate-y-1/2 [@media(hover:none)]:hidden"
       style={{ left: pos.x, top: pos.y }}
     >
       <div
@@ -95,18 +95,18 @@ function DrawerPanel({ item, onClose }: { item: DrawerItem; onClose: () => void 
       >
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 md:right-8 md:top-8 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity"
+          className="absolute right-3 top-4 md:right-8 md:top-8 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity"
           aria-label="Cerrar"
         >
           <X size={28} strokeWidth={1.5} />
         </button>
 
         <div className="flex-1 overflow-y-auto overscroll-contain">
-          <div className="flex flex-col gap-16 p-8 md:p-14 pb-16">
+          <div className="flex flex-col gap-10 md:gap-16 px-5 pt-16 pb-12 md:p-14 md:pb-16">
 
-            <div className="flex gap-4 items-center font-['Outfit',sans-serif] font-normal text-[#212121] text-[13px] uppercase flex-wrap pr-12">
+            <div className="flex gap-x-2 gap-y-1 md:gap-4 items-center font-['Outfit',sans-serif] font-normal text-[#212121] text-[11px] md:text-[13px] uppercase flex-wrap pr-10">
               {meta.filter(Boolean).map((m, i) => (
-                <span key={i} className="flex gap-4 items-center">
+                <span key={i} className="flex gap-2 md:gap-4 items-center">
                   {i > 0 && <span className="opacity-30">·</span>}
                   <span>{m}</span>
                 </span>
@@ -115,11 +115,11 @@ function DrawerPanel({ item, onClose }: { item: DrawerItem; onClose: () => void 
 
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4 font-['Outfit',sans-serif] font-normal text-[#212121]">
-                <p className="text-[48px] md:text-[56px] leading-[1.1]">{item.data.title}</p>
-                {summary && <p className="text-[18px] md:text-[22px] uppercase leading-normal">{summary}</p>}
+                <p className="text-[34px] md:text-[56px] leading-[1.1]">{item.data.title}</p>
+                {summary && <p className="text-[15px] md:text-[22px] uppercase leading-snug">{summary}</p>}
               </div>
               {project?.roleNote && (
-                <div className="bg-[#f5f5f5] rounded-[2px] p-7 font-['Outfit',sans-serif] text-[#212121] text-[14px] leading-[1.6]">
+                <div className="bg-[#f5f5f5] rounded-[2px] p-4 md:p-7 font-['Outfit',sans-serif] text-[#212121] text-[13px] md:text-[14px] leading-[1.6]">
                   {project.roleNote}
                 </div>
               )}

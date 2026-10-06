@@ -14,13 +14,13 @@ function toEmbed(url: string) {
 
 const textComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[16px] md:text-[18px] leading-[1.6]">{children}</p>,
-    h2: ({ children }) => <p className="text-[22px] uppercase pt-6">{children}</p>,
+    normal: ({ children }) => <p className="text-[15px] md:text-[18px] leading-[1.6]">{children}</p>,
+    h2: ({ children }) => <p className="text-[17px] md:text-[22px] uppercase pt-4 md:pt-6">{children}</p>,
     h3: ({ children }) => (
       <p className="font-medium text-[11px] tracking-[0.55px] uppercase pt-6">{children}</p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-[#97a7dd] pl-5 text-[18px] md:text-[20px] leading-[1.5]">{children}</blockquote>
+      <blockquote className="border-l-2 border-[#97a7dd] pl-5 text-[16px] md:text-[20px] leading-[1.5]">{children}</blockquote>
     ),
   },
   list: {
@@ -46,7 +46,7 @@ export function RichContent({ blocks }: { blocks: ContentBlock[] }) {
   }
 
   return (
-    <div className={`flex flex-col gap-10 ${font}`}>
+    <div className={`flex flex-col gap-8 md:gap-10 ${font}`}>
       {groups.map((g, i) => {
         if (Array.isArray(g)) {
           return (
