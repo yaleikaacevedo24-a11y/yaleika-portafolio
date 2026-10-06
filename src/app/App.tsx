@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { usePortfolioContent, type DrawerItem, type Project, type Article } from "@/lib/content";
+import logoSvg from "@/assets/svg/logo.svg?raw";
+import logoFooterSvg from "@/assets/svg/logo-footer.svg?raw";
 import { RichContent } from "./components/RichContent";
 import svgPaths from "@/assets/svg/landing";
 import svgViewButton from "@/assets/svg/view-button";
@@ -285,12 +287,8 @@ function Header() {
   return (
     <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-3 sm:px-9">
       {/* Logo */}
-      <span
-        className="text-3xl sm:text-4xl text-white leading-none tracking-wide"
-        style={{ fontFamily: "'GC Clova', sans-serif" }}
-      >
-        YALEIKA
-      </span>
+      <a href="#" aria-label="Yaleika — inicio" className="text-white block w-[100px] sm:w-[124px] [&>svg]:w-full [&>svg]:h-auto [&>svg]:block"
+        dangerouslySetInnerHTML={{ __html: logoSvg }} />
 
       {/* Tagline — hidden on mobile */}
       <span className="hidden md:block font-['Outfit',sans-serif] font-medium text-[11px] text-white tracking-[0.55px] uppercase">
@@ -894,42 +892,6 @@ function BlogSection({ items, onOpen }: { items: Article[]; onOpen: (item: Drawe
   );
 }
 
-// ── Logo ajustado al ancho exacto (sin márgenes ni cortes) ───────────────────
-
-function FitLogo({ text }: { text: string }) {
-  const family = "'GC Clova', sans-serif";
-  const [box, setBox] = useState<{ x: number; y: number; w: number; h: number; base: number } | null>(null);
-
-  useEffect(() => {
-    const measure = () => {
-      const ctx = document.createElement("canvas").getContext("2d");
-      if (!ctx) return;
-      ctx.font = `400 100px ${family}`;
-      const m = ctx.measureText(text);
-      const left = m.actualBoundingBoxLeft, right = m.actualBoundingBoxRight;
-      const asc = m.actualBoundingBoxAscent, desc = m.actualBoundingBoxDescent;
-      setBox({ x: -left, y: -asc, w: left + right, h: asc + desc, base: 0 });
-    };
-    measure();
-    document.fonts?.ready.then(measure);
-  }, [text]);
-
-  if (!box) return <div className="w-full aspect-[5/1]" />;
-
-  return (
-    <svg
-      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
-      className="block w-full h-auto"
-      role="img"
-      aria-label={text}
-    >
-      <text x="0" y="0" fill="#212121" style={{ fontFamily: family, fontSize: 100, fontWeight: 400 }}>
-        {text}
-      </text>
-    </svg>
-  );
-}
-
 // ── Footer ────────────────────────────────────────────────────────────────────
 
 function Footer() {
@@ -1012,7 +974,8 @@ function Footer() {
 
       {/* Big brand name — ocupa todo el ancho, pegado abajo, sin cortes */}
       <div className="-mx-5 sm:-mx-9 pt-10">
-        <FitLogo text="YALEIKA" />
+        <div role="img" aria-label="Yaleika" className="text-[#212121] [&>svg]:block [&>svg]:w-full [&>svg]:h-auto"
+          dangerouslySetInnerHTML={{ __html: logoFooterSvg }} />
       </div>
     </footer>
   );
