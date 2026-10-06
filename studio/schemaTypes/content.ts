@@ -36,11 +36,12 @@ export const contentField = defineField({
       },
     }),
     defineArrayMember({
+      // Imagen como tipo "image" directo: la forma recomendada por Sanity dentro de texto enriquecido
       name: "imageBlock",
       title: "Imagen",
-      type: "object",
+      type: "image",
+      options: { hotspot: true },
       fields: [
-        { name: "image", type: "image", title: "Imagen", options: { hotspot: true }, validation: (r) => r.required() },
         { name: "alt", type: "string", title: "Texto alternativo" },
         { name: "caption", type: "string", title: "Pie de foto" },
         {
@@ -51,7 +52,6 @@ export const contentField = defineField({
           initialValue: "full",
         },
       ],
-      preview: { select: { media: "image", title: "caption", subtitle: "size" }, prepare: (v) => ({ ...v, title: v.title || "Imagen" }) },
     }),
     defineArrayMember({
       name: "gallery",

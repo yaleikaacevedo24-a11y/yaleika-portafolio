@@ -53,7 +53,6 @@ export type DrawerItem =
 
 const contentProjection = `content[]{
   ...,
-  _type == "imageBlock" => { ..., "asset": image },
   _type == "gallery" => { ..., images[]{ ..., "asset": @ } },
   _type == "videoBlock" => { ..., "fileUrl": file.asset->url }
 }`;
@@ -84,7 +83,7 @@ function normalizeBlocks(blocks: any[] | undefined): ContentBlock[] {
   return (blocks ?? []).map((b) => {
     switch (b._type) {
       case "imageBlock":
-        return { ...b, src: img(b.asset, b.size === "mobile" ? 700 : 1600) };
+        return { ...b, src: img(b.image ?? b, b.size === "mobile" ? 700 : 1600) };
       case "gallery":
         return { ...b, images: (b.images ?? []).map((i: any) => ({ src: img(i.asset, 1200), alt: i.alt })) };
       default:
