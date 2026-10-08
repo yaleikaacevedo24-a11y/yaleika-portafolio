@@ -16,8 +16,9 @@ const CFG = {
   COL_B: "#93A3D8",   // mismo tono: ala sólida
   VEIN: "#212121",    // detalles: borde, nervaduras y puntos
   SCALE: 0.7,
-  SCALE_MOB: 0.55,
+  SCALE_MOB: 1,
   DPR_MAX: 1.5,
+  DPR_MAX_MOB: 2.5,
   FBM_OCT: 5,
 };
 
@@ -135,7 +136,7 @@ vec3 path(float t,float fi,float halfW,float halfH){
  float out_ = 0.5-0.5*cos(t*0.25+ph);               // 0 = en la esquina, 1 = lo más lejos
  float span = halfW*(0.95+0.35*hash(fi+3.0));
  float x = side*((halfW+2.5) - out_*(span+2.5));
- float y = -halfH*0.55 + out_*halfH*(0.35+0.25*hash(fi+7.0))
+ float y = -halfH*0.05 + out_*halfH*(0.12+0.18*hash(fi+7.0))
            + sin(t*0.5+ph)*0.6 + sin(t*4.0+ph)*0.12;
  float z = sin(t*0.25+ph*2.0)*1.5;
  return vec3(x,y,z);}
@@ -211,7 +212,7 @@ export function Butterflies() {
 
     let W = 0, H = 0;
     const resize = () => {
-      const dpr = Math.min(devicePixelRatio || 1, CFG.DPR_MAX) * SCALE;
+      const dpr = Math.min(devicePixelRatio || 1, mob ? CFG.DPR_MAX_MOB : CFG.DPR_MAX) * SCALE;
       const w = Math.max(1, Math.round(root.clientWidth * dpr));
       const h = Math.max(1, Math.round(root.clientHeight * dpr));
       if (w === W && h === H) return;

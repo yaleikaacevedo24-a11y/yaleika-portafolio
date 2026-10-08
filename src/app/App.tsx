@@ -14,15 +14,37 @@ import imgArticleImage from "@/assets/images/ejemplo-1.jpg";
 
 function useGlobalCursor() {
   const [pos, setPos] = useState({ x: -200, y: -200 });
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisibleState] = useState(false);
+  const scope = useRef<string>(Math.random().toString(36).slice(2));
 
   useEffect(() => {
-    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    const check = (x: number, y: number) => {
+      const el = document.elementFromPoint(x, y) as HTMLElement | null;
+      const card = el?.closest("[data-view-cursor]") as HTMLElement | null;
+      setVisibleState(!!card && card.dataset.viewCursor === scope.current);
+    };
+    const move = (e: MouseEvent) => { setPos({ x: e.clientX, y: e.clientY }); check(e.clientX, e.clientY); };
+    let last = { x: -1, y: -1 };
+    const track = (e: MouseEvent) => { last = { x: e.clientX, y: e.clientY }; };
+    const recheck = () => last.x >= 0 && check(last.x, last.y);
+    const hide = () => setVisibleState(false);
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    window.addEventListener("mousemove", track);
+    window.addEventListener("scroll", recheck, true);
+    document.addEventListener("mouseleave", hide);
+    window.addEventListener("blur", hide);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mousemove", track);
+      window.removeEventListener("scroll", recheck, true);
+      document.removeEventListener("mouseleave", hide);
+      window.removeEventListener("blur", hide);
+    };
   }, []);
 
-  return { pos, visible, setVisible };
+  // Las tarjetas ya no controlan el "Ver" directamente: se marca con data-view-cursor
+  const setVisible = useCallback((_v: boolean) => {}, []);
+  return { pos, visible, setVisible, cursorId: scope.current };
 }
 
 const cursorContext = {
@@ -95,7 +117,7 @@ function DrawerPanel({ item, onClose }: { item: DrawerItem; onClose: () => void 
       >
         <button
           onClick={onClose}
-          className="absolute right-3 top-4 md:right-8 md:top-8 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity"
+          className="absolute right-3 top-4 md:right-8 md:top-8 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity text-white mix-blend-difference"
           aria-label="Cerrar"
         >
           <X size={28} strokeWidth={1.5} />
@@ -500,7 +522,7 @@ function AboutSection() {
           {/* Ecosystem */}
           <div className="flex flex-col gap-4">
             <p className="font-['Outfit',sans-serif] font-medium text-[#212121] text-[11px] tracking-[0.55px] uppercase">
-              MI ECOSISTEMA PRINCIPAL
+              MI ENTORNO DE TRABAJO
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <PlatformCard
@@ -604,11 +626,11 @@ function SimplifyProjectCard({
 }
 
 function ProjectsCarousel({ items, onOpen }: { items: Project[]; onOpen: (item: DrawerItem) => void }) {
-  const { pos, visible, setVisible } = useGlobalCursor();
+  const { pos, visible, setVisible, cursorId } = useGlobalCursor();
   const [all, setAll] = useState(false);
   if (!items.length) return null;
   const card = (c: Project) => (
-    <div onClick={() => onOpen({ type: "project", data: c })}>
+    <div data-view-cursor={cursorId} onClick={() => onOpen({ type: "project", data: c })}>
       <SimplifyProjectCard bg={c.cardColor} bgImage={c.cardImage} bgVideo={c.cardVideo} textColor="white"
         label={c.title} previewImage={c.previewImage} onHoverChange={setVisible} />
     </div>
@@ -701,11 +723,11 @@ function IndependentCard({ bgColor, bgImage, bgVideo, title, subtitle, previewIm
 }
 
 function IndependentProjects({ items, onOpen }: { items: Project[]; onOpen: (item: DrawerItem) => void }) {
-  const { pos, visible, setVisible } = useGlobalCursor();
+  const { pos, visible, setVisible, cursorId } = useGlobalCursor();
   const [all, setAll] = useState(false);
   if (!items.length) return null;
   const card = (p: Project) => (
-    <div onClick={() => onOpen({ type: "project", data: p })}>
+    <div data-view-cursor={cursorId} onClick={() => onOpen({ type: "project", data: p })}>
       <IndependentCard bgColor={p.cardColor} bgImage={p.cardImage} bgVideo={p.cardVideo} title={p.title}
         subtitle={p.category ?? ""} previewImage={p.previewImage} onHoverChange={setVisible} />
     </div>
@@ -726,41 +748,53 @@ function IndependentProjects({ items, onOpen }: { items: Project[]; onOpen: (ite
 
 // ── Experience ────────────────────────────────────────────────────────────────
 
+function useDesktopHover() {
+  const q = "(hover: hover) and (pointer: fine) and (min-width: 1024px)";
+  const [ok, setOk] = useState(() => typeof window !== "undefined" && matchMedia(q).matches);
+  useEffect(() => {
+    const m = matchMedia(q);
+    const on = () => setOk(m.matches);
+    m.addEventListener("change", on);
+    return () => m.removeEventListener("change", on);
+  }, []);
+  return ok;
+}
+
 function SubItem({ label, description }: { label: string; description: string }) {
+  const desktop = useDesktopHover();
   const [hovered, setHovered] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const active = hovered || expanded;
+  const active = desktop ? hovered : expanded;
 
   return (
     <div
       className={`relative flex flex-col w-full border-b border-[#e5e5e5] transition-colors duration-300 ${active ? "bg-[#212121]" : "bg-transparent"}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={() => setExpanded((p) => !p)}
+      onMouseEnter={() => desktop && setHovered(true)}
+      onMouseLeave={() => desktop && setHovered(false)}
+      onClick={() => !desktop && setExpanded((p) => !p)}
     >
-      {/* Label row */}
-      <div className="flex items-center justify-between px-4 py-4 cursor-pointer select-none">
+      <div className="flex items-center justify-between gap-6 px-4 py-4 cursor-pointer select-none">
         <p className={`font-['Outfit',sans-serif] font-normal text-[16px] sm:text-[18px] leading-[1.6] shrink-0 transition-colors duration-300 ${active ? "text-white" : "text-[#212121]"}`}>
           {label}
         </p>
-        {/* Mobile chevron */}
-        <span className={`sm:hidden text-[18px] leading-none transition-all duration-300 ${active ? "text-white rotate-45" : "text-[#212121] rotate-0"}`}>
-          +
-        </span>
-        {/* Desktop description — inline right */}
-        <p className={`hidden sm:block font-['Outfit',sans-serif] font-normal text-[14px] leading-[1.6] w-[400px] transition-all duration-300 overflow-hidden ${
-          hovered ? "text-white opacity-100 max-h-24" : "opacity-0 max-h-0"
-        }`}>
-          {description}
-        </p>
+        {desktop ? (
+          <p className={`font-['Outfit',sans-serif] font-normal text-[14px] leading-[1.6] w-[400px] transition-all duration-300 overflow-hidden ${
+            hovered ? "text-white opacity-100 max-h-24" : "opacity-0 max-h-0"
+          }`}>
+            {description}
+          </p>
+        ) : (
+          <span className={`text-[20px] leading-none transition-all duration-300 ${active ? "text-white rotate-45" : "text-[#212121] rotate-0"}`}>+</span>
+        )}
       </div>
 
-      {/* Mobile description — expands below */}
-      <div className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${expanded ? "max-h-40 pb-4" : "max-h-0"}`}>
-        <p className="font-['Outfit',sans-serif] font-normal text-white text-[14px] leading-[1.6] px-4">
-          {description}
-        </p>
-      </div>
+      {!desktop && (
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expanded ? "max-h-48 pb-4" : "max-h-0"}`}>
+          <p className="font-['Outfit',sans-serif] font-normal text-white text-[14px] sm:text-[15px] leading-[1.6] px-4 max-w-[640px]">
+            {description}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -869,11 +903,11 @@ function ArticleCard({ img, category, date, title, excerpt, onHoverChange }: Art
 }
 
 function BlogSection({ items, onOpen }: { items: Article[]; onOpen: (item: DrawerItem) => void }) {
-  const { pos, visible, setVisible } = useGlobalCursor();
+  const { pos, visible, setVisible, cursorId } = useGlobalCursor();
   const [all, setAll] = useState(false);
   if (!items.length) return null;
   const card = (a: Article) => (
-    <div onClick={() => onOpen({ type: "article", data: a })}>
+    <div data-view-cursor={cursorId} onClick={() => onOpen({ type: "article", data: a })}>
       <ArticleCard img={a.coverImage ?? ""} category={a.category ?? ""} date={a.date ?? ""}
         title={a.title} excerpt={a.excerpt ?? ""} onHoverChange={setVisible} />
     </div>
