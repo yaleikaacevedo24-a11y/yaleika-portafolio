@@ -514,7 +514,7 @@ function AboutSection() {
           {/* Bio */}
           <div className="flex flex-col gap-3">
             <p className="font-['Outfit',sans-serif] font-normal text-[#212121] text-[16px] sm:text-[18px] leading-[1.6]">
-              Soy chitreana, diseñadora UX/UI apasionada del e-commerce. Formo parte del equipo de diseño de Simplify, la primera agencia Shopify Plus Partner de Centroamérica y el Caribe, donde diseño y maqueto experiencias de e-commerce en Figma. También trabajo de forma independiente con marcas que buscan un diseño estratégico, centrado en el usuario y orientado a resultados.
+              Soy diseñadora UX/UI especializada en e-commerce, chitreana y apasionada por crear tiendas que venden. Formo parte del equipo de diseño de Simplify, la primera agencia Shopify Plus Partner de Centroamérica y el Caribe, donde diseño experiencias de e-commerce en Figma, y trabajo de forma independiente con marcas que buscan un diseño estratégico, centrado en el usuario y orientado a resultados.
             </p>
             <div className="flex flex-wrap gap-2">
               <StatPill num="+2" label="Años en e-commerce" />
