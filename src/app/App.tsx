@@ -333,9 +333,9 @@ function Header() {
         <button
           type="button"
           onClick={openBrief}
-          className="text-[13px] text-[#212121] bg-white uppercase px-4 py-2 rounded-full hover:opacity-80 transition-opacity"
+          className="text-[13px] text-white uppercase px-2 hover:opacity-70 transition-opacity"
         >
-          CONTACTO
+          [CONTACTO]
         </button>
       </nav>
 
@@ -955,7 +955,7 @@ function Footer() {
                 onClick={openBrief}
                 className="group inline-flex items-center gap-2 self-start text-[16px] sm:text-[18px] border-b border-[#212121] pb-1 hover:opacity-70 transition-opacity"
               >
-                Cuéntame de tu proyecto
+                Hablemos de tu proyecto
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform group-hover:translate-x-1">
                   <path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -987,6 +987,13 @@ function Footer() {
           <div className="flex flex-col gap-5">
             <p>[CONECTAR]</p>
             <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={openBrief}
+                className="text-left uppercase hover:opacity-60 transition-opacity"
+              >
+                AGENDA UNA LLAMADA
+              </button>
               {[
                 { label: "SIMPLIFY;", href: "https://simplify.agency/" },
                 { label: "WORKANA", href: "https://www.workana.com/es" },
