@@ -22,7 +22,7 @@ export const project = defineType({
     defineField({ name: "category", title: "Categoría", description: "Ej. Swimwear · E-commerce", type: "string", group: "card" }),
     defineField({ name: "order", title: "Orden", description: "Número menor aparece primero.", type: "number", group: "card" }),
     defineField({ name: "cardImage", title: "Imagen de fondo de la tarjeta", type: "image", options: { hotspot: true }, group: "card" }),
-    defineField({ name: "cardVideo", title: "Video de fondo (opcional, reemplaza la imagen)", type: "file", options: { accept: "video/*" }, group: "card" }),
+    defineField({ name: "cardVideo", title: "Video de fondo (opcional, reemplaza la imagen)", description: "Solo MP4 (H.264) o WebM. Los .mov del iPhone no se ven en Chrome: expórtalos como MP4 antes de subir. Máx. ~8 MB.", type: "file", options: { accept: "video/mp4,video/webm" }, group: "card" }),
     defineField({ name: "previewImage", title: "Imagen al pasar el mouse (hover)", type: "image", options: { hotspot: true }, group: "card" }),
     defineField({ name: "cardColor", title: "Color de fondo (si no hay imagen)", type: "string", initialValue: "#212121", group: "card" }),
     defineField({ name: "year", title: "Año", type: "string", group: "popup" }),

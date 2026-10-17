@@ -77,7 +77,7 @@ export function RichContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <figure key={g._key} className="flex flex-col gap-3">
                 {g.fileUrl ? (
-                  <video src={g.fileUrl} controls playsInline className="w-full rounded-[4px]" />
+                  <video src={g.fileUrl} controls playsInline preload="metadata" className="w-full rounded-[4px] bg-black" />
                 ) : g.embedUrl ? (
                   <div className="aspect-video w-full rounded-[4px] overflow-hidden">
                     <iframe

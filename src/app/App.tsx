@@ -4,6 +4,8 @@ import { usePortfolioContent, type DrawerItem, type Project, type Article } from
 import logoSvg from "@/assets/svg/logo.svg?raw";
 import logoFooterSvg from "@/assets/svg/logo-footer.svg?raw";
 import { RichContent } from "./components/RichContent";
+import { BgVideo } from "./components/BgVideo";
+import { BriefDrawer, openBrief } from "./components/BriefDrawer";
 import svgPaths from "@/assets/svg/landing";
 import svgViewButton from "@/assets/svg/view-button";
 import imgHeroSection from "@/assets/images/hero.png";
@@ -328,6 +330,13 @@ function Header() {
             [{item}]
           </a>
         ))}
+        <button
+          type="button"
+          onClick={openBrief}
+          className="text-[13px] text-[#212121] bg-white uppercase px-4 py-2 rounded-full hover:opacity-80 transition-opacity"
+        >
+          CONTACTO
+        </button>
       </nav>
 
       {/* Mobile hamburger */}
@@ -352,6 +361,13 @@ function Header() {
               [{item}]
             </a>
           ))}
+          <button
+            type="button"
+            onClick={() => { setOpen(false); openBrief(); }}
+            className="text-left text-[13px] text-white uppercase px-5 py-4 hover:bg-white/10 transition-colors"
+          >
+            [CONTACTO]
+          </button>
         </div>
       )}
     </header>
@@ -583,13 +599,7 @@ function SimplifyProjectCard({
 
       {/* Background video */}
       {bgVideo && (
-        <video
-          src={bgVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        <BgVideo src={bgVideo} poster={bgImage} className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
       )}
 
@@ -681,13 +691,7 @@ function IndependentCard({ bgColor, bgImage, bgVideo, title, subtitle, previewIm
 
       {/* Background video */}
       {bgVideo && (
-        <video
-          src={bgVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-transform duration-[1200ms] ease-out ${hovered ? "scale-[1.04]" : "scale-100"}`}
+        <BgVideo src={bgVideo} poster={bgImage} className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-transform duration-[1200ms] ease-out ${hovered ? "scale-[1.04]" : "scale-100"}`}
         />
       )}
 
@@ -946,17 +950,16 @@ function Footer() {
               >
                 yaleikaacevedo@gmail.com
               </a>
-              <a
-                href="https://calendar.app.google/2bA5FduLar58SQ4E7"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={openBrief}
                 className="group inline-flex items-center gap-2 self-start text-[16px] sm:text-[18px] border-b border-[#212121] pb-1 hover:opacity-70 transition-opacity"
               >
-                Agenda una llamada
+                Cuéntame de tu proyecto
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform group-hover:translate-x-1">
                   <path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </button>
             </div>
           </div>
           <p className="text-[14px]">© 2026 Yaleika Acevedo</p>
@@ -1034,6 +1037,7 @@ export default function App() {
       <BlogSection items={articles} onOpen={openDrawer} />
       <Footer />
       {drawerItem && <DrawerPanel item={drawerItem} onClose={closeDrawer} />}
+      <BriefDrawer />
     </div>
   );
 }

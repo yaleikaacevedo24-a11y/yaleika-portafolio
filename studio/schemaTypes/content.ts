@@ -75,7 +75,7 @@ export const contentField = defineField({
       type: "object",
       description: "Sube un clip corto o pega un link de YouTube/Vimeo (recomendado para videos largos).",
       fields: [
-        { name: "file", type: "file", title: "Archivo de video (mp4/webm)", options: { accept: "video/*" } },
+        { name: "file", type: "file", title: "Archivo de video (mp4/webm)", description: "Solo MP4 (H.264) o WebM; los .mov no se reproducen en Chrome.", options: { accept: "video/mp4,video/webm" } },
         { name: "embedUrl", type: "url", title: "Link de YouTube o Vimeo" },
         { name: "caption", type: "string", title: "Pie de video" },
       ],
