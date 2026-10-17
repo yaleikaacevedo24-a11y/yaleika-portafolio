@@ -330,13 +330,13 @@ function Header() {
             [{item}]
           </a>
         ))}
-        <button
-          type="button"
-          onClick={openBrief}
+        <a
+          href="#contacto"
+          onClick={(e) => { e.preventDefault(); openBrief(); }}
           className="text-[13px] text-white uppercase px-2 hover:opacity-70 transition-opacity"
         >
           [CONTACTO]
-        </button>
+        </a>
       </nav>
 
       {/* Mobile hamburger */}
@@ -361,13 +361,13 @@ function Header() {
               [{item}]
             </a>
           ))}
-          <button
-            type="button"
-            onClick={() => { setOpen(false); openBrief(); }}
-            className="text-left text-[13px] text-white uppercase px-5 py-4 hover:bg-white/10 transition-colors"
+          <a
+            href="#contacto"
+            onClick={(e) => { e.preventDefault(); setOpen(false); openBrief(); }}
+            className="text-[13px] text-white uppercase px-5 py-4 hover:bg-white/10 transition-colors"
           >
             [CONTACTO]
-          </button>
+          </a>
         </div>
       )}
     </header>
@@ -407,7 +407,7 @@ function HeroSection() {
             Diseño experiencias digitales que convierten, entendiendo el negocio y el comportamiento del comprador.
           </p>
           <div className="flex flex-col items-start lg:items-end font-['Outfit',sans-serif] font-normal text-white uppercase lg:shrink-0">
-            <span className="text-[10px]">[ BASE ]</span>
+            <span className="text-[10px]">[ UBICACIÓN ]</span>
             <span className="text-[13px]">Panamá</span>
           </div>
         </div>
@@ -514,7 +514,7 @@ function AboutSection() {
           {/* Bio */}
           <div className="flex flex-col gap-3">
             <p className="font-['Outfit',sans-serif] font-normal text-[#212121] text-[16px] sm:text-[18px] leading-[1.6]">
-              Formo parte del equipo de diseño de Simplify, la primera agencia Shopify Plus Partner de Centroamérica y el Caribe, donde diseño y maqueto experiencias de e-commerce en Figma. También trabajo de forma independiente con marcas que buscan un diseño estratégico, centrado en el usuario y orientado a resultados.
+              Soy chitreana, diseñadora UX/UI apasionada del e-commerce. Formo parte del equipo de diseño de Simplify, la primera agencia Shopify Plus Partner de Centroamérica y el Caribe, donde diseño y maqueto experiencias de e-commerce en Figma. También trabajo de forma independiente con marcas que buscan un diseño estratégico, centrado en el usuario y orientado a resultados.
             </p>
             <div className="flex flex-wrap gap-2">
               <StatPill num="+2" label="Años en e-commerce" />
@@ -950,16 +950,16 @@ function Footer() {
               >
                 yaleikaacevedo@gmail.com
               </a>
-              <button
-                type="button"
-                onClick={openBrief}
+              <a
+                href="#contacto"
+                onClick={(e) => { e.preventDefault(); openBrief(); }}
                 className="group inline-flex items-center gap-2 self-start text-[16px] sm:text-[18px] border-b border-[#212121] pb-1 hover:opacity-70 transition-opacity"
               >
                 Hablemos de tu proyecto
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform group-hover:translate-x-1">
                   <path d="M2.5 8h11M9.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </button>
+              </a>
             </div>
           </div>
           <p className="text-[14px]">© 2026 Yaleika Acevedo</p>
@@ -987,14 +987,8 @@ function Footer() {
           <div className="flex flex-col gap-5">
             <p>[CONECTAR]</p>
             <div className="flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={openBrief}
-                className="text-left uppercase hover:opacity-60 transition-opacity"
-              >
-                AGENDA UNA LLAMADA
-              </button>
               {[
+                { label: "AGENDA UNA LLAMADA", href: "https://calendar.app.google/2bA5FduLar58SQ4E7" },
                 { label: "SIMPLIFY;", href: "https://simplify.agency/" },
                 { label: "WORKANA", href: "https://www.workana.com/es" },
                 { label: "BEHANCE", href: "https://www.behance.net/yaleikaacevedo" },
