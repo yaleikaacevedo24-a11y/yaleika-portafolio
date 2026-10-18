@@ -19,7 +19,8 @@ const PRESUPUESTOS = ["$1.000 – $2.500", "$2.500 – $5.000", "$5.000 – $8.0
 const PLAZOS = ["Lo antes posible", "En 1–2 meses", "En 3 meses o más"];
 const PLATAFORMAS = ["Shopify", "WooCommerce", "Otra", "Aún no tengo tienda"];
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+// Clave pública de Web3Forms (los briefs llegan a tu correo). Si existe la variable en Vercel, se usa esa.
+const WEB3FORMS_KEY = (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) || "00792a91-aa4a-4888-895d-54fa982220c3";
 
 type Data = {
   nombre: string; email: string; whatsapp: string; marca: string; web: string; etapa: string;
