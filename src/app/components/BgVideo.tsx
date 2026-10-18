@@ -48,6 +48,8 @@ export function BgVideo({ src, poster, className = "" }: { src: string; poster?:
       preload="auto"
       aria-hidden
       onCanPlay={() => setReady(true)}
+      onLoadedData={() => setReady(true)}
+      onPlaying={() => setReady(true)}
       onError={() => setFailed(true)}
       className={`${className} transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"}`}
     />

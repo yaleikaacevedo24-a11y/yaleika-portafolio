@@ -119,7 +119,7 @@ function DrawerPanel({ item, onClose }: { item: DrawerItem; onClose: () => void 
       >
         <button
           onClick={onClose}
-          className="absolute right-3 top-4 md:right-8 md:top-8 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity text-white mix-blend-difference"
+          className="absolute right-3 top-4 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity text-white mix-blend-difference"
           aria-label="Cerrar"
         >
           <X size={28} strokeWidth={1.5} />

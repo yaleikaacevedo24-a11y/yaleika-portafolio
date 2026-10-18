@@ -44,7 +44,7 @@ function Field({ label, children, required }: { label: string; children: React.R
   );
 }
 const inputCls =
-  "w-full bg-[#f3f4f6] rounded-[8px] px-4 py-[14px] text-[14px] placeholder:text-[#8a8a8a] outline-none focus:ring-1 focus:ring-[#212121] transition";
+  "w-full bg-[#f3f4f6] rounded-none px-4 py-[14px] text-[14px] placeholder:text-[#8a8a8a] outline-none focus:ring-1 focus:ring-[#212121] transition";
 
 function Chips({ label, options, value, onChange, multi, required }: {
   label: string; options: string[]; value: string | string[]; onChange: (v: any) => void; multi?: boolean; required?: boolean;
@@ -187,14 +187,18 @@ export function BriefDrawer() {
         aria-modal="true"
         aria-label="Cuéntame de tu proyecto"
       >
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute right-3 top-4 z-10 size-10 flex items-center justify-center hover:opacity-60 transition-opacity text-white mix-blend-difference"
+          aria-label="Cerrar"
+        >
+          <X size={28} strokeWidth={1.5} />
+        </button>
+
         {/* Top */}
-        <div className="flex flex-col gap-6 px-5 pt-6 md:px-12 md:pt-10">
-          <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-6 px-5 pt-6 md:px-12 md:pt-4">
+          <div className="flex items-center min-h-10 pr-12">
             <span className="text-[12px] tracking-[0.48px]">{step < 4 ? `[ PASO ${step} DE 3 ]` : "[ BRIEF ENVIADO ]"}</span>
-            <button onClick={() => setOpen(false)} aria-label="Cerrar"
-              className="size-8 rounded-full bg-[#f3f4f6] flex items-center justify-center hover:opacity-70 transition-opacity">
-              <X size={14} strokeWidth={1.5} />
-            </button>
           </div>
           {step < 4 && (
             <div className="flex gap-[6px]" aria-hidden>
