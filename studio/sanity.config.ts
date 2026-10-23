@@ -18,19 +18,19 @@ export default defineConfig({
           .title("Contenido")
           .items([
             S.listItem()
-              .title("Proyectos con Simplify")
+              .title("Mis proyectos de e-commerce")
               .child(
                 S.documentList()
-                  .title("Proyectos con Simplify")
+                  .title("Mis proyectos de e-commerce")
                   .filter('_type == "project" && kind == "simplify"')
                   .defaultOrdering([{ field: "order", direction: "asc" }])
                   .initialValueTemplates([S.initialValueTemplateItem("project-simplify")]),
               ),
             S.listItem()
-              .title("Proyectos independientes")
+              .title("Mis proyectos")
               .child(
                 S.documentList()
-                  .title("Proyectos independientes")
+                  .title("Mis proyectos")
                   .filter('_type == "project" && kind == "independiente"')
                   .defaultOrdering([{ field: "order", direction: "asc" }])
                   .initialValueTemplates([S.initialValueTemplateItem("project-independiente")]),
@@ -45,8 +45,8 @@ export default defineConfig({
     types: schemaTypes,
     templates: (prev) => [
       ...prev.filter((t) => t.schemaType !== "project"),
-      { id: "project-simplify", title: "Proyecto con Simplify", schemaType: "project", value: { kind: "simplify" } },
-      { id: "project-independiente", title: "Proyecto independiente", schemaType: "project", value: { kind: "independiente" } },
+      { id: "project-simplify", title: "Proyecto de e-commerce", schemaType: "project", value: { kind: "simplify" } },
+      { id: "project-independiente", title: "Mi proyecto", schemaType: "project", value: { kind: "independiente" } },
     ],
   },
 });
