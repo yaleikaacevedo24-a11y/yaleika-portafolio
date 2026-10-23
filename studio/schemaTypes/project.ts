@@ -15,7 +15,7 @@ export const project = defineType({
       title: "Sección",
       type: "string",
       group: "card",
-      options: { list: [{ title: "Proyectos con Simplify", value: "simplify" }, { title: "Proyectos independientes", value: "independiente" }], layout: "radio" },
+      options: { list: [{ title: "Mis proyectos de e-commerce", value: "simplify" }, { title: "Mis proyectos", value: "independiente" }], layout: "radio" },
       validation: (r) => r.required(),
     }),
     defineField({ name: "title", title: "Título", type: "string", group: "card", validation: (r) => r.required() }),
@@ -33,6 +33,6 @@ export const project = defineType({
   orderings: [{ title: "Orden manual", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
   preview: {
     select: { title: "title", subtitle: "category", media: "cardImage", kind: "kind" },
-    prepare: ({ title, subtitle, media, kind }) => ({ title, subtitle: `${kind === "simplify" ? "Simplify" : "Independiente"} · ${subtitle ?? ""}`, media }),
+    prepare: ({ title, subtitle, media, kind }) => ({ title, subtitle: `${kind === "simplify" ? "E-commerce" : "Mis proyectos"} · ${subtitle ?? ""}`, media }),
   },
 });

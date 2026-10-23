@@ -99,7 +99,7 @@ function DrawerPanel({ item, onClose }: { item: DrawerItem; onClose: () => void 
   const project = isProject ? (item.data as Project) : null;
   const article = !isProject ? (item.data as Article) : null;
   const meta = isProject
-    ? [project!.category, project!.kind === "simplify" ? "Simplify" : "Independiente", project!.year]
+    ? [project!.category, project!.kind === "simplify" ? "E-commerce" : null, project!.year]
     : [article!.category, article!.date];
   const summary = project?.summary ?? article?.excerpt;
 
@@ -647,10 +647,10 @@ function ProjectsCarousel({ items, onOpen }: { items: Project[]; onOpen: (item: 
   );
   return (
     <>
-      <Slider id="proyectos" title=" PROYECTOS con SIMPLIFY;" items={items}
+      <Slider id="proyectos" title=" MIS PROYECTOS de E-COMMERCE" items={items}
         itemClass="w-[75vw] sm:w-[44vw] lg:w-[30vw]" renderItem={card} onViewAll={() => setAll(true)} />
       {all && (
-        <ViewAllPanel title="Proyectos con Simplify" onClose={() => setAll(false)}>
+        <ViewAllPanel title="Mis proyectos de e-commerce" onClose={() => setAll(false)}>
           {items.map((c) => <div key={c.id}>{card(c)}</div>)}
         </ViewAllPanel>
       )}
@@ -726,7 +726,16 @@ function IndependentCard({ bgColor, bgImage, bgVideo, title, subtitle, previewIm
   );
 }
 
-function IndependentProjects({ items, onOpen }: { items: Project[]; onOpen: (item: DrawerItem) => void }) {
+// Tamaño de las tarjetas de "Mis proyectos":
+//   "grande"   → mismo ancho y alto que las de e-commerce (uso actual, mientras esa sección está vacía)
+//   "compacto" → tamaño original más pequeño (vuelve a este cuando habilites "Mis proyectos de e-commerce")
+const MIS_PROYECTOS_TAMANO: "grande" | "compacto" = "grande";
+const MIS_PROYECTOS_ANCHO = {
+  grande: "w-[75vw] sm:w-[44vw] lg:w-[30vw]",
+  compacto: "w-[75vw] sm:w-[44vw] lg:w-[23vw]",
+};
+
+function IndependentProjects({ items, onOpen, anchorId }: { items: Project[]; onOpen: (item: DrawerItem) => void; anchorId?: string }) {
   const { pos, visible, setVisible, cursorId } = useGlobalCursor();
   const [all, setAll] = useState(false);
   if (!items.length) return null;
@@ -738,10 +747,10 @@ function IndependentProjects({ items, onOpen }: { items: Project[]; onOpen: (ite
   );
   return (
     <>
-      <Slider title=" PROYECTOS independientes" items={items}
-        itemClass="w-[75vw] sm:w-[44vw] lg:w-[23vw]" renderItem={card} onViewAll={() => setAll(true)} />
+      <Slider id={anchorId} title=" MIS PROYECTOS" items={items}
+        itemClass={MIS_PROYECTOS_ANCHO[MIS_PROYECTOS_TAMANO]} renderItem={card} onViewAll={() => setAll(true)} />
       {all && (
-        <ViewAllPanel title="Proyectos independientes" onClose={() => setAll(false)}>
+        <ViewAllPanel title="Mis proyectos" onClose={() => setAll(false)}>
           {items.map((p) => <div key={p.id}>{card(p)}</div>)}
         </ViewAllPanel>
       )}
@@ -1033,7 +1042,7 @@ export default function App() {
       <HeroSection />
       <AboutSection />
       <ProjectsCarousel items={simplify} onOpen={openDrawer} />
-      <IndependentProjects items={independent} onOpen={openDrawer} />
+      <IndependentProjects items={independent} onOpen={openDrawer} anchorId={simplify.length ? undefined : "proyectos"} />
       <ExperienceSection />
       <BlogSection items={articles} onOpen={openDrawer} />
       <Footer />
