@@ -309,18 +309,18 @@ function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-3 sm:px-9">
+    <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] px-5 py-3 sm:px-9">
       {/* Logo */}
-      <a href="#" aria-label="Yaleika — inicio" className="text-white block w-[100px] sm:w-[124px] [&>svg]:w-full [&>svg]:h-auto [&>svg]:block"
+      <a href="#" aria-label="Yaleika — inicio" className="text-white block justify-self-start w-[100px] sm:w-[124px] [&>svg]:w-full [&>svg]:h-auto [&>svg]:block"
         dangerouslySetInnerHTML={{ __html: logoSvg }} />
 
       {/* Tagline — hidden on mobile */}
-      <span className="hidden md:block font-['Outfit',sans-serif] font-medium text-[11px] text-white tracking-[0.55px] uppercase">
+      <span className="hidden md:block md:justify-self-center text-center font-['Outfit',sans-serif] font-medium text-[11px] text-white tracking-[0.55px] uppercase">
         UX/UI DESIGNER · E-COMMERCE
       </span>
 
       {/* Desktop nav */}
-      <nav className="hidden md:flex gap-3 items-center font-['Outfit',sans-serif]">
+      <nav className="hidden md:flex md:justify-self-end gap-3 items-center font-['Outfit',sans-serif]">
         {["SOBRE MÍ", "PROYECTOS", "BLOG"].map((item) => (
           <a
             key={item}
@@ -341,7 +341,7 @@ function Header() {
 
       {/* Mobile hamburger */}
       <button
-        className="md:hidden text-white p-1"
+        className="md:hidden justify-self-end text-white p-1"
         onClick={() => setOpen(!open)}
         aria-label="Toggle menu"
       >
@@ -729,7 +729,7 @@ function IndependentCard({ bgColor, bgImage, bgVideo, title, subtitle, previewIm
 // Tamaño de las tarjetas de "Mis proyectos":
 //   "grande"   → mismo ancho y alto que las de e-commerce (uso actual, mientras esa sección está vacía)
 //   "compacto" → tamaño original más pequeño (vuelve a este cuando habilites "Mis proyectos de e-commerce")
-const MIS_PROYECTOS_TAMANO: "grande" | "compacto" = "grande";
+const MIS_PROYECTOS_TAMANO: "grande" | "compacto" = "compacto";
 const MIS_PROYECTOS_ANCHO = {
   grande: "w-[75vw] sm:w-[44vw] lg:w-[30vw]",
   compacto: "w-[75vw] sm:w-[44vw] lg:w-[23vw]",
